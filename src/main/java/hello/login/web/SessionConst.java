@@ -1,7 +1,8 @@
 package hello.login.web;
 
-public class SessionConst {
-    public static final String LOGIN_MEMBER = "loginMember";
+public interface SessionConst {
+    //세션상수 - 세션값 넣다 뺏다 하게
+    String LOGIN_MEMBER = "loginMember";
 }
 
 

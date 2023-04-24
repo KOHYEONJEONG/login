@@ -63,8 +63,32 @@ public class LoginController {
 
     }
 
+   // @PostMapping("/login")
+//    public String loginV2(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response) {
+//        if (bindingResult.hasErrors()) {
+//            return "login/loginForm";
+//        }
+//
+//        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+//
+//        if (loginMember == null) {
+//            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+//            return "login/loginForm";
+//        }
+//
+//        /**로그인 성공 처리*/
+//        //세션 관리자를 통해 세션을 생성하고, 회원 데이터 보관
+//        sessionManager.createSession(loginMember, response);  //응답헤더 => Set-Cookie: mySessionId=ee541731-7bfb-403a-a20e-764d526e8095
+//
+//        return "redirect:/";
+//
+//    }
+
+
     @PostMapping("/login")
-    public String loginV2(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response) {
+    public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request) {
+        //우리가 자주 사용하는것.
+
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
@@ -77,13 +101,14 @@ public class LoginController {
         }
 
         /**로그인 성공 처리*/
-        //세션 관리자를 통해 세션을 생성하고, 회원 데이터 보관
-        sessionManager.createSession(loginMember, response);  //응답헤더 => Set-Cookie: mySessionId=ee541731-7bfb-403a-a20e-764d526e8095
+        //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
+        HttpSession session = request.getSession();
+        //세션에 로그인 회원 정보 보관
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         return "redirect:/";
 
     }
-
 
 
     //@PostMapping("/logout")
@@ -92,9 +117,19 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
+   //@PostMapping("/logout")
     public String logoutV2(HttpServletRequest request) {
         sessionManager.expire(request);//request를 줘야지 쿠키에 값을 꺼내서 삭제하잖아~
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logoutV3(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
         return "redirect:/";
     }
 
