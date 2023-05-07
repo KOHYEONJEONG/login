@@ -102,7 +102,7 @@ public class LoginController {
 
         /**로그인 성공 처리*/
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession();//기본은 true,(기존 세션이 있으면 유지, 없으면 새로운 세션 생성) 반대로 false는 기존 세션이 있다면 유지하지만, 없으면 생성x, null반환
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
