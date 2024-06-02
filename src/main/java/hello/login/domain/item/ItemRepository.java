@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ItemRepository {
+public class  ItemRepository {
 
     private static final Map<Long, Item> store = new HashMap<>(); //static
     private static long sequence = 0L; //static
@@ -24,6 +24,7 @@ public class ItemRepository {
     }
 
     public List<Item> findAll() {
+        //Map<Long, Item>
         return new ArrayList<>(store.values());
     }
 
