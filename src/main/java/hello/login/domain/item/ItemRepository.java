@@ -31,7 +31,7 @@ public class  ItemRepository {//아이템 저장소
     public void update(Long itemId, Item updateParam) {
         Item findItem = findById(itemId);
         findItem.setItemName(updateParam.getItemName());
-        findItem.setPrice(updateParam.getPrice());
+        findItem.setPrice(updateParam.getPrice());//
         findItem.setQuantity(updateParam.getQuantity());
     }
 
