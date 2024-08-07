@@ -19,10 +19,11 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
-
+    /**ArgumentResolver 등록*/
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        //@Login 사용 등록
+
+        //⭐@Login 사용 등록
         resolvers.add(new LoginMemberArgumentResolver());
     }
 
