@@ -41,7 +41,7 @@ public class LogInterceptor implements HandlerInterceptor {//HandlerInterceptor�
         if(handler instanceof HandlerMethod){
             //@RequestMapping: HandlerMethod 가 넘어온다.(true)
             //정적 리소스: ResourceHttpRequestHandler  가 넘어온다(false)
-            HandlerMethod hm = (HandlerMethod) handler;//호출할 컨트롤러 메서드의 모든 정보가 포함되어 있다.
+            HandlerMethod hm = (HandlerMethod) handler;//⭐호출할 컨트롤러 메서드의 모든 정보가 포함되어 있다.
             //log.info("getMethod={}", hm.getMethod());
             //getMethod=public java.lang.String hello.login.web.login.LoginController.loginV3(hello.login.web.login.LoginForm, org.springframework.validation.BindingResult, javax.servlet.http.HttpServletRequest)
 
@@ -65,14 +65,14 @@ public class LogInterceptor implements HandlerInterceptor {//HandlerInterceptor�
     }
 
     /**
-     * 뷰가 렌더링 된 이후에도 호출된다~
+     * 뷰가 렌더링 된 이후에도 호출된다~차
      * ㄴ 예외가 발생한 경우 postHandle 가 호출되지 않기 때문이다. afterCompletion 은 예외가 발생해도 호출 되는 것을 보장하기에 예외로그는 여기다가 찍기
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String requestURI = request.getRequestURI();
         //preHandle()에서 request에 담았기 때문에 uuid를 같이 사용가능하다.
-        Object logId = request.getAttribute(LOG_ID);//uuid
+        Object logId = request.getAttribute(LOG_ID);//preHandler에서 등록된 uuid를 가져다 사용할 수 있다.
 
         log.info("RESPONSE [{}][{}][{}]", logId, requestURI, handler);
 
