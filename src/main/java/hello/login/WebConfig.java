@@ -30,6 +30,8 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) { //implements WebMvcConfigurer의 구현체
 
+        //인터셉터 다중 등록도 가능
+
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")

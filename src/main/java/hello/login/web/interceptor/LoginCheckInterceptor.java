@@ -26,7 +26,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor { //LoginCheckF
             log.info("미인증 사용자 요청");
             //로그인으로 redirect
             response.sendRedirect("/login?redirectURL="+requestURI);
-            return false;//여기서 끝! 진행 안한다는 뜻
+            return false;//중요! 여기서 끝! 진행 안한다는 뜻
         }
 
         return true;//다음으로 진행해라(false면 진행 안함,)

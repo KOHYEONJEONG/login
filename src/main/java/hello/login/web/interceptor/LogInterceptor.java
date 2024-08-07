@@ -35,8 +35,9 @@ public class LogInterceptor implements HandlerInterceptor {//HandlerInterceptor�
         String requestURI = request.getRequestURI();
         String uuid = UUID.randomUUID().toString();
 
+        //⭐인터셉터는 preHandle, postHandle, afterComplete에서 함께 사용하려면 request에 담아서 사용하면된다.
         //(중요)uuid를 전역변수로 만들면 싱글톤으로 만들어지기 때문에 큰일난데! 그러면?? request.setAttribute()를 사용하자. request에 담아서 가지고 다니는 거지
-        request.setAttribute(LOG_ID, uuid);//엑셀런트!(다른 구현 메소드에서 uuid를 사용하고 싶을때 이렇게 보내주자. , afterCompletion()에서 사용한다. )
+        request.setAttribute(LOG_ID, uuid);//⭐엑셀런트!(다른 구현 메소드에서 uuid를 사용하고 싶을때 이렇게 보내주자. , afterCompletion()에서 사용한다. )
 
         if(handler instanceof HandlerMethod){
             //@RequestMapping: HandlerMethod 가 넘어온다.(true)
