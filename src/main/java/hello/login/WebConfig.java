@@ -23,12 +23,18 @@ public class WebConfig implements WebMvcConfigurer{
     
     //WebMvcConfigurer 역할 : 인터셉터, 메시지 컨버터, 정적 리소스 경로, 포맷터 등 Web 관련 설정 확정
 
-    /**ArgumentResolver 등록*/
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 
+        /*
+         * ArgumentResolver 등록(개념은 MVC1편 참고)
+         *
+        */
+
         //⭐@Login 사용 등록
         resolvers.add(new LoginMemberArgumentResolver());
+
+        //콘솔에 resolverArgument 실행( @Login) <-  있으면 실행된거임.
     }
 
     /**인터셉터 등록*/

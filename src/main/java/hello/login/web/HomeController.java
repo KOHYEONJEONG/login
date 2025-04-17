@@ -108,6 +108,7 @@ public class HomeController {
         return "loginHome";
     }
 
+    //@Login으로 자동으로 세션을 찾아서 비교하게~ (ArgumentResolve 를 활용, 개념은 mvc1편 참고하자)
     @GetMapping("/")
     public String homeLoginV3ArgumentResolver(@Login Member loginMember, Model model) {
         //만들어서 사용하면 공통 컨트롤러에 사용을 어노테이션 하나로 간편하게 사용가능하다.
