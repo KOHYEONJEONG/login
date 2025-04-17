@@ -16,6 +16,8 @@ import java.util.UUID;
  * 인터셉터는 aop와 다르게 HTTP의 헤더 또는 URL의 정보들이 필요할 때 사용하며 HttpServeltRequest를 제공한다.
  * ㄴ 인터셉터는 스프링 MVC 구조에 특화된 필터 기능을 제공한다고 이해하면 된다
  * */
+
+//요청 로그 찍기
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {//HandlerInterceptor는 스프링이 제공
 

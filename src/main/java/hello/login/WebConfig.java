@@ -35,6 +35,9 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) { //implements WebMvcConfigurer의 구현체
 
+        // 🚨필터 작성 시 whiteList 설정을 해야했지만
+        // 🚨인터셉터는 인터셉터 등록 시 whiteList 및 제외할 경로까지 등록이 가능하다.
+
         //인터셉터 다중 등록도 가능
 
         registry.addInterceptor(new LogInterceptor())
@@ -46,7 +49,7 @@ public class WebConfig implements WebMvcConfigurer{
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")//모든 경로에 로그체크 해!
-                .excludePathPatterns("/", "/members/add","/login","/logout","/css/**", "/*.ico","/error"); //exclude 이 경로는 제외! (/home , /item 들어가기전에 막음)
+                .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error"); //exclude 이 경로는 제외! (/home , /item 들어가기전에 막음)
     }
 
     /**아래 @Bean 주석처리 한 이유는 필터보다 스프링에서 제공하는 인터셉터를 사용하는게 더 효율적이다. 위에 addInterceptors()를 보자*/
@@ -61,6 +64,7 @@ public class WebConfig implements WebMvcConfigurer{
         //hello.login.web.filter.LogFilter         : log filter init <- 출력된다.
     }
 
+    /**⏬스프링 인터셉터를 사용할거기에 로그인 체크 두번되기 때문에 주석처리*/
   //  @Bean
     public  FilterRegistrationBean loginCheckFilter(){
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
