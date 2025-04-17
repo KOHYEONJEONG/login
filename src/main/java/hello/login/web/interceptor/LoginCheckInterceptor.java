@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**인터셉터 순서 2 */
+/**인터셉터 체인 2*/
+/**ㄴ인터셉터 순서 2 */
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor { //LoginCheckFilter.java보다 훨씬 간결해진걸 알 수 있다.
 
@@ -24,7 +25,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor { //LoginCheckF
 
         if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
             log.info("미인증 사용자 요청");
-            //로그인으로 redirect
+            //로그인으로 redirect(진짜 편리한다)
             response.sendRedirect("/login?redirectURL="+requestURI);
             return false;//중요! 여기서 끝! 진행 안한다는 뜻
         }

@@ -19,6 +19,10 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
+    //스프링 컨테이너 초기화 시점에 자동으로 등록됨
+    
+    //WebMvcConfigurer 역할 : 인터셉터, 메시지 컨버터, 정적 리소스 경로, 포맷터 등 Web 관련 설정 확정
+
     /**ArgumentResolver 등록*/
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -35,14 +39,14 @@ public class WebConfig implements WebMvcConfigurer{
 
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/css/**","/*.ico","/error");//이 경로들은 빼!, 이외에 것들만 로그인터센터가 찍힘.
+                .addPathPatterns("/**")//모든 경로에 로그체크 해!
+                .excludePathPatterns("/css/**","/*.ico","/error");//exclude 이 경로들은 빼!, 이외에 것들만 로그인터센터가 찍힘.
 
         //로그인을 하지않고 바로 http://127.0.0.1:8091/items로 이동 시 '로그인 페이지'로 이동된다.
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")//모든 경로에 로그체크 해!
-                .excludePathPatterns("/", "/members/add","/login","/logout","/css/**", "/*.ico","/error"); //이 경로는 제외!
+                .excludePathPatterns("/", "/members/add","/login","/logout","/css/**", "/*.ico","/error"); //exclude 이 경로는 제외! (/home , /item 들어가기전에 막음)
     }
 
     /**아래 @Bean 주석처리 한 이유는 필터보다 스프링에서 제공하는 인터셉터를 사용하는게 더 효율적이다. 위에 addInterceptors()를 보자*/

@@ -15,7 +15,7 @@ import java.io.IOException;
 public class LoginCheckFilter implements Filter { //WebConfig.java에서 실행해줌. (loginCheckFilter 메서드)
 
     //인증체크 안하는 경로, 들어갈 수 있는 것들은 허용가능하도록 리스트
-    private static final String[] whitelist = {"/", "/members/add", "/login", "/logout", "/css/*"};
+    private static final String[] whitelist = {"/", "/members/add", "/login", "/logout", "/css/*"};//인증 필터를 적용해도 홈, 회원가입, 로그인 화면, css 같은 리소스에는 접근할 수 있어야 한다
 
     /** public default void init(FilterConfig filterConfig) throws ServletException
      * ㄴ 최근에 'default' 키워드가 들어가서 이제는 모든걸 구현하지 않아도 된다!!*/
