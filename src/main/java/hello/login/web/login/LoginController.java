@@ -48,6 +48,7 @@ public class LoginController {
         //로그인 성공 처리
         /**
          * 쿠키(영속쿠키와 세션쿠키가 있음)
+         * -> 브라우저 내부 쿠키 저장소(브라우저 localStorage랑 다름)
          * -> 서버에서 로그인에 성공하면 HTTP 응답에 쿠키를 담아서 브라우저에 전달하자. 그러면 앞으로 해당 쿠키를 지속해서 보내준다.
          *
          * 영속 쿠키 : 만료 날짜를 입력하면 해당 날짜까지 유지
@@ -58,7 +59,7 @@ public class LoginController {
 
         //쿠키에 시간 정보를 주지 않으면 세션 쿠기(브라우저 종료시 모두 종료)
         Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
-        response.addCookie(idCookie);//Reponse Headers에서 확인하면 Set-Cookie에서 memberId=1 확인 가능.
+        response.addCookie(idCookie);//login > Reponse Headers에서 확인하면 Set-Cookie에서 memberId=1 확인 가능.
         return "redirect:/";
 
     }
@@ -100,7 +101,35 @@ public class LoginController {
             return "login/loginForm";
         }
 
-        /**로그인 성공 처리*/
+        /**
+         * Session vs SessionStorage 차이
+         *
+         * 서버 세션(HttpSession)
+         * - 서버 측 저장소
+         * - 브라우저 종료 or 로그아웃 or 타임아웃 시 만료
+         * - 서버와 연동 (서버 메모리/DB 상태 저장)
+         * - 서버 보관 -> 안전(단, 쿠키 탈취는 주의)
+         * - 로그인 상태 유지 , 사용자 정보 저장
+         * - 서버에서 접근
+         * 
+         * 브라우저(sessionStorage)
+         * - 클라이언트(브라우저) 내부 저장소
+         * - 탭/창 닫히면 삭제
+         * - 자동으로 서버로 전송 안됨
+         * - js에서 접근 가능 - xss 취약
+         * - 탭 간 독립적 임시 데이터 저장
+         * - JS로 접근
+         * */
+
+
+        /**로그인 성공 처리
+         *
+         * 서버에서 session 을 생성하면
+         * Response Header에 Set-Cookies
+         *
+         * Application탭에 Cookies에
+         * 생성
+         * */
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
         HttpSession session = request.getSession();//기본은 true,(기존 세션이 있으면 유지, 없으면 새로운 세션 생성) 반대로 false는 기존 세션이 있다면 유지하지만, 없으면 생성x, null반환
         //세션에 로그인 회원 정보 보관
